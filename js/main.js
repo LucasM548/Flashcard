@@ -87,19 +87,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const decksDataPremiere = [
         {
+            name: "Physique-Chimie - Première",
+            price: "14,99",
+            cardCount: 190,
+            features: ["Flashcards", "Toutes les démonstrations", "Cours numérique rigoureux"],
+            chapters: ["Constitution de la matière", "Modélisation des transformations de la matière", "L'énergie : conversions et transferts", "Ondes et signaux"]
+        },
+        {
             name: "Français - Première",
             price: "8,99",
             cardCount: 150,
             features: ["Flashcards"],
+            isLowerQuality: true,
             chapters: ["Le roman et le récit du Moyen Âge au XXIe siècle", "La poésie du XIXe siècle au XXIe siècle", "Le théâtre du XVIIe siècle au XXIe siècle", "La littérature d'idées du XVIe siècle au XVIIIe siècle"]
         },
-        {
-            name: "Physique-Chimie - Première",
-            price: "8,99",
-            cardCount: 190,
-            features: ["Flashcards", "Toutes les démonstrations", "Cours numérique rigoureux"],
-            chapters: ["Constitution de la matière", "Modélisation des transformations de la matière", "L'énergie : conversions et transferts", "Ondes et signaux"]
-        }
     ];
 
     // --- Fonction pour générer les cartes ---
@@ -118,6 +119,10 @@ document.addEventListener('DOMContentLoaded', () => {
                    </ul>`
                 : '';
 
+            const qualityNoteHTML = deck.isLowerQuality
+                ? `<div class="quality-note">Qualité légèrement inférieure (1ère édition)</div>`
+                : '';
+
             deckElement.innerHTML = `
                 <div class="deck-header">
                     <div>
@@ -130,6 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                 </div>
                 ${featuresHTML}
+                ${qualityNoteHTML}
                 <ul class="chapters-list" id="chapters-${deckId}">
                     ${deck.chapters.map(chapter => `<li>${chapter}</li>`).join('')}
                 </ul>
