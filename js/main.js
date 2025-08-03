@@ -131,7 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                     <div class="deck-actions">
                         <button class="btn btn-secondary btn-toggle-chapters" data-deck-id="${deckId}">Voir les chapitres</button>
-                        <button class="btn btn-primary">🛒 Acheter - ${deck.price}€</button>
+                        <button class="btn btn-primary btn-purchase" data-deck-name="${deck.name}" data-deck-price="${deck.price}">🛒 Acheter - ${deck.price}€</button>
                     </div>
                 </div>
                 ${featuresHTML}
@@ -163,4 +163,79 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     });
+
+    // --- Logique du Modal d'Achat ---
+    const modalOverlay = document.getElementById('purchase-modal');
+    const purchaseForm = document.getElementById('purchase-form');
+    const closeBtn = document.querySelector('.modal-close-btn');
+    const deckNameInput = document.getElementById('form-deck-name');
+    const deckPriceInput = document.getElementById('form-deck-price');
+
+    if (modalOverlay) {
+        const openModal = (deckName, deckPrice) => {
+            deckNameInput.value = deckName;
+            deckPriceInput.value = deckPrice;
+            modalOverlay.style.display = 'flex';
+            setTimeout(() => modalOverlay.classList.add('active'), 10);
+        };
+
+        const closeModal = () => {
+            modalOverlay.classList.remove('active');
+            setTimeout(() => modalOverlay.style.display = 'none', 300);
+        };
+
+        document.body.addEventListener('click', (event) => {
+            const purchaseBtn = event.target.closest('.btn-purchase');
+            if (purchaseBtn) {
+                const deckName = purchaseBtn.dataset.deckName;
+                const deckPrice = purchaseBtn.dataset.deckPrice;
+                openModal(deckName, deckPrice);
+            }
+        });
+
+        closeBtn.addEventListener('click', closeModal);
+        modalOverlay.addEventListener('click', (event) => {
+            if (event.target === modalOverlay) {
+                closeModal();
+            }
+        });
+
+        purchaseForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+            const submitButton = purchaseForm.querySelector('button[type="submit"]');
+            submitButton.disabled = true;
+            submitButton.textContent = 'Envoi en cours...';
+
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbxVx_qVHq8CjXr8Gre5cl-IMUv3kk0ojgxHEozOvS5Pk59XEP_qtgM8sKeTpLZFBeE5nA/exec';
+
+            const formData = new FormData(purchaseForm);
+            const priceWithComma = formData.get('price');
+            const priceWithDot = priceWithComma.replace(',', '.');
+            formData.set('price', priceWithDot);
+
+            fetch(scriptURL, { method: 'POST', body: formData })
+                .then(response => {
+                    const modalContent = document.querySelector('.modal-content');
+
+                    modalContent.innerHTML = `
+                        <h3>Merci !</h3>
+                        <p>Votre demande a été enregistrée. Cliquez sur le bouton ci-dessous pour finaliser votre commande.</p>
+                        <a href="https://www.paypal.me/LucasM54/${priceWithDot}" target="_blank" class="btn btn-primary btn-paypal">
+                            Payer ${priceWithDot}€ avec PayPal
+                        </a>
+                        <p style="margin-top: 20px; font-size: 0.9rem;">Vous recevrez l'accès par email après confirmation du paiement.</p>
+                        <button class="btn btn-secondary" onclick="location.reload()" style="margin-top:10px;">Fermer</button>
+                    `;
+                })
+                .catch(error => {
+                    console.error('Error!', error.message);
+                    const modalContent = document.querySelector('.modal-content');
+                    modalContent.innerHTML = `
+                        <h3>Erreur</h3>
+                        <p>Une erreur est survenue. Veuillez réessayer ou me contacter directement.</p>
+                        <button class="btn btn-secondary" onclick="location.reload()">Fermer</button>
+                    `;
+                });
+        });
+    }
 });
