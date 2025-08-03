@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
             name: "Physique-Chimie - Terminale",
             price: "14,99",
             cardCount: 212,
-            features: ["Flashcards", "Toutes les démonstrations", "Cours numérique rigoureux"],
+            features: ["Flashcards", "90% des démonstrations", "Cours numérique rigoureux"],
             chapters: [
                 "Rappels de première",
                 "Transformation Acide-Base et pH",
@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
             cardCount: 170,
             features: ["Flashcards", "Toutes les démonstrations", "Cours numérique rigoureux"],
             chapters: [
-                "Rappels",
+                "Rappels de première",
                 "Raisonnement par récurrence",
                 "Dénombrement (1)",
                 "Les Suites",
@@ -89,49 +89,69 @@ document.addEventListener('DOMContentLoaded', () => {
         {
             name: "Physique-Chimie - Première",
             price: "14,99",
-            cardCount: 190,
-            features: ["Flashcards", "Toutes les démonstrations", "Cours numérique rigoureux"],
-            chapters: ["Constitution de la matière", "Modélisation des transformations de la matière", "L'énergie : conversions et transferts", "Ondes et signaux"]
+            cardCount: 170,
+            isLowerQuality: true,
+            isUnderConstruction: true,
+            features: ["Flashcards", "Cours numérique rigoureux", "TP", "Exercices + corrections"],
+            chapters: []
+        },
+        {
+            name: "Mathématiques - Première",
+            price: "8,99",
+            cardCount: 63,
+            isLowerQuality: true,
+            isUnderConstruction: true,
+            features: ["Flashcards", "Cours numérique rigoureux", "TP", "Exercices + corrections"],
+            chapters: []
         },
         {
             name: "Français - Première",
             price: "8,99",
-            cardCount: 150,
-            features: ["Flashcards"],
+            cardCount: 99,
             isLowerQuality: true,
-            chapters: ["Le roman et le récit du Moyen Âge au XXIe siècle", "La poésie du XIXe siècle au XXIe siècle", "Le théâtre du XVIIe siècle au XXIe siècle", "La littérature d'idées du XVIe siècle au XVIIIe siècle"]
-        },
+            isUnderConstruction: true,
+            features: ["Flashcards", "Méthodes"],
+            chapters: []
+        }
     ];
 
     // --- Fonction pour générer les cartes ---
-    const createDeckElements = (decks, containerId, idPrefix) => {
+    function createDeckElements(decks, containerId, idPrefix) {
         const container = document.getElementById(containerId);
         if (!container) return;
 
         decks.forEach((deck, index) => {
             const deckId = `${idPrefix}-${index}`;
             const deckElement = document.createElement('div');
-            deckElement.classList.add('deck-item');
+            deckElement.className = 'deck-item';
 
-                        const featuresHTML = deck.features
+            let note = '';
+            if (deck.isUnderConstruction) {
+                note = `<div class="note-construction">En construction</div>`;
+            } else if (deck.isLowerQuality) {
+                note = `<div class="note-lower-quality">Qualité inférieure</div>`;
+            }
+
+            const featuresHTML = deck.features
                 ? `<ul class="deck-features">
                     ${deck.features.map(feature => `<li>${feature}</li>`).join('')}
                    </ul>`
                 : '';
 
-            const qualityNoteHTML = deck.isLowerQuality
+            const qualityNoteHTML = deck.isLowerQuality && !deck.isUnderConstruction
                 ? `<div class="quality-note">Qualité légèrement inférieure (1ère édition)</div>`
                 : '';
 
             deckElement.innerHTML = `
+                ${note}
                 <div class="deck-header">
                     <div>
                         <h4 class="deck-title">${deck.name}</h4>
                         <span class="deck-card-count">${deck.cardCount} flashcards</span>
                     </div>
                     <div class="deck-actions">
-                        <button class="btn btn-secondary btn-toggle-chapters" data-deck-id="${deckId}">Voir les chapitres</button>
-                        <button class="btn btn-primary btn-purchase" data-deck-name="${deck.name}" data-deck-price="${deck.price}">🛒 Acheter - ${deck.price}€</button>
+                        <button class="btn btn-secondary btn-toggle-chapters" data-deck-id="${deckId}" ${deck.isUnderConstruction ? 'disabled' : ''}>Voir les chapitres</button>
+                        <button class="btn btn-primary btn-purchase" data-deck-name="${deck.name}" data-deck-price="${deck.price}" ${deck.isUnderConstruction ? 'disabled' : ''}>🛒 Acheter - ${deck.price}€</button>
                     </div>
                 </div>
                 ${featuresHTML}
@@ -142,7 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
             `;
             container.appendChild(deckElement);
         });
-    };
+    }
 
     // --- Génération des deux sections ---
     createDeckElements(decksDataTerminale, 'decks-list-terminale', 't');
@@ -154,11 +174,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const button = event.target;
             const deckId = button.dataset.deckId;
             const chaptersList = document.getElementById(`chapters-${deckId}`);
-            
+
             if (chaptersList) {
                 chaptersList.classList.toggle('open');
-                button.textContent = chaptersList.classList.contains('open') 
-                    ? 'Masquer les chapitres' 
+                button.textContent = chaptersList.classList.contains('open')
+                    ? 'Masquer les chapitres'
                     : 'Voir les chapitres';
             }
         }
