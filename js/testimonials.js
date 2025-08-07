@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const cardWidth = cards[0].offsetWidth;
         const gap = parseInt(getComputedStyle(slider).gap) || 30;
         const offset = currentIndex * (cardWidth + gap);
-        
+
         slider.style.transform = `translateX(-${offset}px)`;
     }
 
@@ -119,7 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     window.addEventListener('resize', () => {
-        currentIndex = 0; 
+        currentIndex = 0;
         updateSlider();
     });
 

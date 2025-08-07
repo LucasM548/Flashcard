@@ -79,6 +79,34 @@ body::before {
     line-height: 1.6;
 }
 
+.hero-image-container {
+    perspective: 1000px;
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+}
+
+
+.hero-image-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    width: 100%;
+    max-width: 850px; /* Further increased size for desktop */
+    margin: 0 auto;
+    transform-style: preserve-3d;
+}
+
+.hero-card {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease;
+}
+
+
+
 /* --- StudySmarter Info --- */
 .info-studysmarter {
     background-color: var(--card-bg);
@@ -537,8 +565,17 @@ body::before {
     }
 
     .main-header h1 { font-size: 4vw; }
+    .hero { padding: 60px 0; }
     .hero h2 { font-size: 2.5rem; }
     .hero .subtitle { font-size: 1.1rem; }
+    .hero-image-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+    .hero-card { border-radius: 8px; }
+    .hero-card:nth-child(n+5) {
+        display: none; /* Hide cards 5-9 on mobile */
+    }
     .deck-header { flex-direction: column; align-items: flex-start; }
     .deck-actions { width: 100%; margin-top: 20px; }
     .btn { width: 100%; text-align: center; box-sizing: border-box; }

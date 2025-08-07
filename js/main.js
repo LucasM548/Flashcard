@@ -258,4 +258,38 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
         });
     }
+
+    // --- Effet 3D Hero Image (Individual Cards) ---
+    const cards = document.querySelectorAll('.hero-card');
+    const maxRotate = 8; // A bit more subtle for individual cards
+
+    cards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            const { width, height } = rect;
+            const middleX = width / 2;
+            const middleY = height / 2;
+
+            const offsetX = (x - middleX) / middleX;
+            const offsetY = (y - middleY) / middleY;
+
+            const rotateY = offsetX * maxRotate;
+            const rotateX = -1 * offsetY * maxRotate;
+
+            window.requestAnimationFrame(() => {
+                card.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.1)`;
+                card.style.zIndex = '2';
+            });
+        });
+
+        card.addEventListener('mouseleave', () => {
+            window.requestAnimationFrame(() => {
+                card.style.transform = 'perspective(800px) rotateX(0deg) rotateY(0deg) scale(1)';
+                card.style.zIndex = '1';
+            });
+        });
+    });
 });
