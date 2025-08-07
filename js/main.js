@@ -369,54 +369,21 @@ document.addEventListener('DOMContentLoaded', () => {
         const nextBtn = document.querySelector('.next-btn');
         const testimonialCards = document.querySelectorAll('.testimonial-card');
         const slider = document.querySelector('.testimonials-slider');
-        let currentIndex = 0;
-
-        function getVisibleCardsCount() {
-            if (window.innerWidth < 768) return 1;
-            if (window.innerWidth < 1024) return 2;
-            return 3;
-        }
-
-        function updateSlider() {
-            if (testimonialCards.length === 0) return;
-
-            const visibleCards = getVisibleCardsCount();
-            const totalCards = testimonialCards.length;
-
-            if (currentIndex > totalCards - visibleCards) {
-                currentIndex = 0;
-            }
-            if (currentIndex < 0) {
-                currentIndex = totalCards - visibleCards;
-            }
-
-            const cardWidth = testimonialCards[0].offsetWidth;
+        function scrollSlider(direction) {
+            if (!slider) return;
+            const cardWidth = slider.querySelector('.testimonial-card').offsetWidth;
             const gap = parseInt(getComputedStyle(slider).gap) || 30;
-            const offset = currentIndex * (cardWidth + gap);
+            const scrollAmount = cardWidth + gap;
 
-            slider.style.transform = `translateX(-${offset}px)`;
+            slider.scrollLeft += direction * scrollAmount;
         }
 
         nextBtn.addEventListener('click', () => {
-            const visibleCards = getVisibleCardsCount();
-            if (currentIndex < testimonialCards.length - visibleCards) {
-                currentIndex++;
-                updateSlider();
-            }
+            scrollSlider(1); // Scroll vers la droite
         });
 
         prevBtn.addEventListener('click', () => {
-            if (currentIndex > 0) {
-                currentIndex--;
-                updateSlider();
-            }
+            scrollSlider(-1); // Scroll vers la gauche
         });
-
-        window.addEventListener('resize', () => {
-            currentIndex = 0;
-            updateSlider();
-        });
-
-        updateSlider();
     }
 });
