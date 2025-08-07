@@ -311,11 +311,11 @@ document.addEventListener('DOMContentLoaded', () => {
             name: "Théo F.",
             school: "Lycée Jean-Zay, Jarny",
             grades: {
-                math: "19/20",
-                physics: "18/20",
-                mathExpert: "19/20",
-                bacMath: "20/20",
-                bacPhysics: "19/20"
+                math: "15.1/20",
+                physics: "15.3/20",
+                mathExpert: "15.1/20",
+                bacMath: "15/20",
+                bacPhysics: "13/20"
             },
             quote: "Une méthode de révision incroyablement efficace. J'ai gagné un temps précieux et mes notes ont grimpé en flèche."
         },
