@@ -4,11 +4,11 @@ document.addEventListener('DOMContentLoaded', () => {
             name: "Lucas M.",
             school: "Lycée Jean-Zay, Jarny",
             grades: {
-                math: "18/20",
+                math: "18.2/20",
                 physics: "17/20",
-                mathExpert: "-",
-                bacMath: "19/20",
-                bacPhysics: "18/20"
+                mathExpert: "15.4/20",
+                bacMath: "16/20",
+                bacPhysics: "17/20"
             },
             quote: "Les flashcards m'ont permis de consolider mes connaissances et d'aborder le bac en toute sérénité. Un outil indispensable !"
         },
