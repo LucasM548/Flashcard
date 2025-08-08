@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
         },
         {
             name: "Histoire - Terminale",
-            price: "9,99",
+            price: "4,99",
             cardCount: 80,
             features: ["Flashcards", "Cours numérique rigoureux"],
             chapters: [
@@ -315,7 +315,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 physics: "15.3/20",
                 mathExpert: "15.1/20",
                 bacMath: "15/20",
-                bacPhysics: "13/20"
+                bacPhysics: "16/20"
             },
             quote: "Une méthode de révision incroyablement efficace. J'ai gagné un temps précieux et mes notes ont grimpé en flèche."
         },
