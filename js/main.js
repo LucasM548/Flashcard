@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
         {
             name: "Physique-Chimie - Terminale",
             price: "14,99",
-            cardCount: 212,
+            cardCount: 213,
             features: ["Flashcards", "Les 22 démonstrations exigibles au BAC", "Cours numérique rigoureux"],
             chapters: [
                 "Rappels de première",
@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
         {
             name: "Mathématiques - Terminale",
             price: "14,99",
-            cardCount: 170,
+            cardCount: 180,
             features: ["Flashcards", "Les 16 démonstrations exigibles au BAC", "Cours numérique rigoureux"],
             chapters: [
                 "Rappels de première",
