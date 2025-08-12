@@ -128,8 +128,6 @@ document.addEventListener('DOMContentLoaded', () => {
             let note = '';
             if (deck.isUnderConstruction) {
                 note = `<div class="note-construction">En construction</div>`;
-            } else if (deck.isLowerQuality) {
-                note = `<div class="note-lower-quality">Qualité inférieure</div>`;
             }
 
             const featuresHTML = deck.features
@@ -367,15 +365,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const prevBtn = document.querySelector('.prev-btn');
         const nextBtn = document.querySelector('.next-btn');
-        const testimonialCards = document.querySelectorAll('.testimonial-card');
-        const slider = document.querySelector('.testimonials-slider');
         function scrollSlider(direction) {
-            if (!slider) return;
-            const cardWidth = slider.querySelector('.testimonial-card').offsetWidth;
-            const gap = parseInt(getComputedStyle(slider).gap) || 30;
+            if (!sliderContainer) return;
+            const cardWidth = sliderContainer.querySelector('.testimonial-card').offsetWidth;
+            const gap = parseInt(getComputedStyle(sliderContainer).gap) || 30;
             const scrollAmount = cardWidth + gap;
 
-            slider.scrollLeft += direction * scrollAmount;
+            sliderContainer.scrollLeft += direction * scrollAmount;
         }
 
         nextBtn.addEventListener('click', () => {
